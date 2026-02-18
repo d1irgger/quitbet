@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的个人项目展示</title>
+    <style>
+        :root {
+            /* 顏色 - 加大灰白對比，深色較深 */
+            --bg-start:        #fdfdfd;
+            --bg-mid:          #e5e7eb;
+            --bg-mid2:         #d1d5db;
+            --bg-end:          #64748b;
+            --text-dark:       #1c1c1e;
+            --text-light:      #e5e7eb;
+            --btn-start:       #3b82f6;
+            --btn-end:         #60a5fa;
+            --btn-hover-start: #2563eb;
+            --btn-hover-end:   #3b82f6;
+
+            /* 尺寸與間距 */
+            --radius-lg:       1.5rem;
+            --radius-xl:       24px;
+            --spacing-xs:      0.5rem;
+            --spacing-sm:      1rem;
+            --spacing-md:      1.5rem;
+            --spacing-lg:      2rem;
+            --spacing-xl:      2.25rem;
+            --spacing-2xl:     3rem;
+            --spacing-3xl:     4rem;
+            --spacing-4xl:     6rem;
+
+            /* 字體尺寸 */
+            --fs-h1:           4.25rem;
+            --fs-h2:           2.75rem;
+            --fs-h3:           1.875rem;
+            --fs-body-lg:      1.5rem;
+            --fs-body:         1.0625rem;
+            --fs-small:        0.9375rem;
+
+            /* 陰影與模糊 */
+            --shadow-sm:      0 0.5rem 2rem rgba(0,0,0,0.08);
+            --shadow-md:      0 1rem 3.75rem rgba(0,0,0,0.12);
+            --blur-lg:         blur(20px);
+            --saturate:        saturate(180%);
+
+            /* 轉場 */
+            --transition-fast:  0.3s ease;
+            --transition-med:   0.35s ease;
+            --transition-slow:  0.45s ease;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --text-dark:       var(--text-light);
+                --bg-start:        #0c1424;
+                --bg-mid:          #1a2539;
+                --bg-mid2:         #2d3b55;
+                --bg-end:          #475569;
+                --glass-bg:        rgba(255,255,255,0.08);
+                --glass-border:    rgba(255,255,255,0.12);
+                --nav-footer-bg:   rgba(31,41,55,0.25);
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, 
+                var(--bg-start) 0%, 
+                var(--bg-mid) 25%, 
+                var(--bg-mid2) 55%, 
+                var(--bg-end) 100%);
+            background-size: 300% 300%;
+            animation: soft-gray-flow 50s ease infinite;
+            transition: all 0.5s ease;
+            scroll-behavior: smooth;
+            /* 新增：避免页面内容被导航栏遮挡 */
+            padding-top: 4rem;
+        }
+
+        @keyframes soft-gray-flow {
+            0%   { background-position: 0% 50%; }
+            50%  { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .glass {
+            backdrop-filter: var(--blur-lg) var(--saturate);
+            background: rgba(255,255,255,0.65);
+            border-radius: var(--radius-xl);
+            border: 1px solid rgba(255,255,255,0.75);
+            box-shadow: var(--shadow-sm);
+            transition: transform var(--transition-med), box-shadow var(--transition-slow);
+        }
+
+        .glass:hover {
+            transform: translateY(-0.5rem);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.75rem;
+            background: linear-gradient(90deg, var(--btn-start), var(--btn-end));
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            border-radius: 999px;
+            transition: all var(--transition-fast);
+            letter-spacing: -0.02em;
+        }
+
+        .btn:hover {
+            background: linear-gradient(90deg, var(--btn-hover-start), var(--btn-hover-end));
+            transform: translateY(-0.1875rem) scale(1.04);
+            box-shadow: 0 0.75rem 2.1875rem rgba(59,130,246,0.35);
+        }
+
+        nav {
+            position: fixed;
+            /* 修改：将top从0改为1.5rem，拉大距离顶部的距离 */
+            top: 1.5rem; 
+            left: 0; 
+            width: 100%;
+            /* 修改：增大上下内边距，让导航栏本身更舒展 */
+            padding: var(--spacing-md) var(--spacing-lg);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: var(--spacing-lg);
+        }
+
+        nav a {
+            color: inherit;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color var(--transition-fast);
+        }
+
+        nav a:hover { color: var(--btn-start); }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: var(--spacing-lg);
+            background: linear-gradient(135deg, 
+                rgba(253,253,253,0.96) 0%, 
+                rgba(229,231,235,0.90) 25%, 
+                rgba(209,213,219,0.84) 55%, 
+                rgba(100,116,139,0.76) 100%);
+            background-size: 300% 300%;
+            animation: soft-gray-flow 50s ease infinite;
+            /* 调整：减少hero区的顶部内边距，抵消body的padding-top影响 */
+            padding-top: 2rem;
+        }
+
+        .hero h1 {
+            font-size: var(--fs-h1);
+            margin-bottom: 1.25rem;
+            letter-spacing: -0.04em;
+        }
+
+        .hero p {
+            font-size: var(--fs-body-lg);
+            max-width: 40rem;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .section-projects {
+            padding: var(--spacing-4xl) var(--spacing-lg) var(--spacing-3xl);
+            max-width: 75rem;
+            margin: 0 auto;
+        }
+
+        .section-projects h2 {
+            font-size: var(--fs-h2);
+            margin-bottom: var(--spacing-2xl);
+            text-align: center;
+        }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+            gap: var(--spacing-xl);
+            justify-items: center;
+        }
+
+        .project-card {
+            width: 100%;
+            max-width: 22.5rem;
+            height: 17.5rem;
+            padding: var(--spacing-xl) 1.75rem;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            margin: 0 auto;
+        }
+
+        .project-card .content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        .project-card h3 {
+            font-size: var(--fs-h3);
+            margin-bottom: var(--spacing-sm);
+            line-height: 1.2;
+            font-weight: 600;
+        }
+
+        .project-card p {
+            font-size: var(--fs-body);
+            line-height: 1.5;
+            opacity: 0.9;
+            margin-bottom: 0;
+            flex: 1;
+        }
+
+        footer {
+            padding: var(--spacing-2xl) var(--spacing-lg);
+            text-align: center;
+            font-size: var(--fs-small);
+            background: rgba(255,255,255,0.4);
+        }
+
+        footer a { color: var(--btn-start); }
+
+        /* 響應式 */
+        @media (max-width: 48rem) {
+            .hero h1   { font-size: 3.25rem; }
+            .hero p    { font-size: 1.3125rem; }
+            .section-projects { padding: 4rem 1.5rem 3rem; }
+
+            .project-card {
+                height: 16.25rem;
+                padding: 2rem 1.5rem;
+            }
+
+            .project-card h3 { font-size: 1.75rem; }
+            .project-grid { gap: 1.75rem; }
+        }
+
+        @media (max-width: 30rem) {
+            .hero h1 { font-size: 2.625rem; }
+            nav {
+                /* 移动端同步调整导航栏的top值和padding */
+                top: 1rem;
+                padding: var(--spacing-md) var(--spacing-sm);
+                flex-direction: column;
+                gap: var(--spacing-sm);
+            }
+
+            .project-card {
+                max-width: 100%;
+                height: auto;
+                min-height: 15rem;
+                padding: 2rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="glass">
+        <div class="logo">我的项目</div>
+        <ul>
+            <li><a href="#home">首页</a></li>
+            <li><a href="#projects">项目</a></li>
+            <li><a href="#contact">联系</a></li>
+        </ul>
+    </nav>
+
+    <section id="home" class="hero glass">
+        <h1>欢迎来到我的个人项目展示</h1>
+        <p>探索我最新的创新项目，参考Apple风格，采用液体玻璃设计。</p>
+        <a href="#projects" class="btn">查看项目</a>
+    </section>
+
+    <section id="projects" class="section-projects">
+        <h2>我的项目</h2>
+        <div class="project-grid">
+            <div class="project-card glass">
+                <div class="content">
+                    <h3>项目一</h3>
+                    <p>这是一个创新的Web应用，使用现代技术构建。</p>
+                </div>
+                <a href="https://example.com/project1" class="btn">查看项目</a>
+            </div>
+
+            <div class="project-card glass">
+                <div class="content">
+                    <h3>项目二</h3>
+                    <p>移动端优化项目，焦点在用户体验上。</p>
+                </div>
+                <a href="https://example.com/project2" class="btn">查看项目</a>
+            </div>
+
+            <div class="project-card glass">
+                <div class="content">
+                    <h3>项目三</h3>
+                    <p>AI驱动的项目，展示先进算法。</p>
+                </div>
+                <a href="https://example.com/project3" class="btn">查看项目</a>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact" class="glass">
+        © 2026 我的项目。所有权利保留。<br><br>
+        <a href="mailto:your@email.com" class="btn">联系我</a>
+    </footer>
+</body>
+</html>
